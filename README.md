@@ -3,20 +3,27 @@
 # Trend Micro Configuration
 
 To integrate with New Relic, there are 3 ways to send Cloud One Workload Security(Deep Security) logs to fluentd.
+
 （ Cloud One Workload Security 又はDeep SecurityとNew Relicが連携を行うには下記3種類の方法があります ）
 
  Pattern 1. DSA → DSA Local Syslog → Fluentd → New Relic
+ 
  Pattern 2. DSA → DSM → DSM Local Syslog → Fluentd → New Relic
+ 
  Pattern 3. DSA → DSM(WS) → Amazon SNS → New Relic
 
 Abbreviation:
+
 DSA - Deep Security Agent
+
 DSM - Deep Security Manager 
+
 WS - Workload Security ( former name: Deep Security as a Service )
 
 #  Pattern 1. DSA → DSA Local Syslog → Fluentd → New Relic
 
  **1. Configuring rsyslog where DSA is installed.
+
 （DSAがインストールされているサーバのrsyslogを設定）**
 ```
 # touch /var/log/dsa_event.log
@@ -40,6 +47,7 @@ local6.*                                                /var/log/dsa_event.log
 ------
 
  **2. Restarting rsyslog to enable above changes
+ 
  （rsyslogを再起動させ、設定を反映させる）**
 ```
 # systemctl restart rsyslog
@@ -50,6 +58,7 @@ local6.*                                                /var/log/dsa_event.log
 ```   
 ---
 **3. Configure log rotation to prevent log full.
+
 （ログの肥大化を防ぐために、ログローテートの設定を行う）** 
 ```
 # vi /etc/logrotate.d/dslog
@@ -99,19 +108,28 @@ local6.*                                                /var/log/dsa_event.log
 ---
 
  **4. Configuring Deep Security**
-For English, please refer following instructions.
+
+For English, please refer following link.
+
 *Forward system events to a syslog or SIEM server
+
 *Forward security events directly in real time from agent computers to a syslog or SIEM server
+
 https://help.deepsecurity.trendmicro.com/10/0/siem-syslog-forwarding.html
 
-For Japanese, please refer following instructions.
+For Japanese, please refer following link.
+
 「システムイベントをSyslogサーバまたはSIEMサーバに転送する」
+
 「AgentコンピュータからSyslogサーバまたはSIEMサーバにリアルタイムで直接セキュリティイベントを転送する」
 を参照ください。
+
 https://help.deepsecurity.trendmicro.com/10/0/ja-jp/siem-syslog-forwarding.html#Protection_modules_DSM
 
  **5. Configuring fluentd**
+
 Please refer [ FluentD Configuration for Trend Micro ] instruction.
+
 （ Fluentdの設定は [ FluentD Configuration for Trend Micro ]を参照ください ）
 
 ---
@@ -122,19 +140,28 @@ Please refer [ FluentD Configuration for Trend Micro ] instruction.
 （Pattern 1の手順１～３を参考にDSMにSyslogの設定を行う）**
 
  **2. Configuring Deep Security**
-For English, please refer following instructions.
+
+For English, please refer following link.
+
 *Forward system events to a syslog or SIEM server
+
 *Forward security events from the agent computers via the Deep Security Manager
+
 https://help.deepsecurity.trendmicro.com/10/0/siem-syslog-forwarding.html
 
-For Japanese, please refer following instructions.
+For Japanese, please refer following link.
+
 「システムイベントをSyslogサーバまたはSIEMサーバに転送する」
+
 「AgentコンピュータからDeep Security Manager経由でセキュリティイベントを転送する」
 を参照ください。
+
 https://help.deepsecurity.trendmicro.com/10/0/ja-jp/siem-syslog-forwarding.html#Protection_modules_DSM
 
  **3. Configuring fluentd**
+
 Please refer [ FluentD Configuration for Trend Micro ] instruction.
+
 （ Fluentdの設定は [ FluentD Configuration for Trend Micro ]を参照ください ）
 
 
@@ -142,14 +169,21 @@ Please refer [ FluentD Configuration for Trend Micro ] instruction.
 #  Pattern 3. DSA → DSM(WS) → Amazon SNS → New Relic
 
  **1. Set up Amazon SNS and its integration.**
-For English, please refer following instruction.
+
+For English, please refer following link.
+
 https://help.deepsecurity.trendmicro.com/event-sns.html
 
-For Japanese,  please refer following instruction.
+
+For Japanese,  please refer following link.
+
 https://help.deepsecurity.trendmicro.com/ja-jp/event-sns.html
 
+
  **2. Configuring fluentd**
+
 Please refer [ FluentD Configuration for Trend Micro ] instruction.
+
 （ Fluentdの設定は [ FluentD Configuration for Trend Micro ]を参照ください ）
 
 # FluentD Configuration for Trend micro
